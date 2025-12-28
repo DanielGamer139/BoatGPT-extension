@@ -6,6 +6,7 @@
       this.runtime = runtime;
       this.lastResponse = "";
       this.history = [];
+      this.memory = []; this.lastResponse = ""; this.role = "You are BoatGPT, an AI chatbot. You aren't currently assigned any special roles.";
     }
 
     getInfo() {
