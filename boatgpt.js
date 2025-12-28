@@ -97,5 +97,5 @@
     }
   }
 
-  Scratch.extensions.register(new IceGPT());
+  Scratch.extensions.register(new BoatGPT());
 })(Scratch);
