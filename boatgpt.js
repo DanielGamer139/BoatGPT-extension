@@ -1,3 +1,24 @@
+  // IOOOOOOOOOOO
+// I           OOOO
+// I               O
+// I               O
+// I           OOOO
+// IOOOOOOOOOOO
+// I           OOOO
+// I               O
+// I               O
+// I               O
+// I               O
+// I           OOOO
+// IOOOOOOOOOOO
+
+//  BoatGPT the amazing extension
+// Based off IceGPT, which is based off PenguinGPT.
+// And uhhhhhhhh
+// Roles exist in this version of IceGPT!!!!!!!
+// hooray
+
+
 (function(Scratch) {
   'use strict';
 
@@ -6,7 +27,8 @@
       this.runtime = runtime;
       this.lastResponse = "";
       this.history = [];
-      this.role = "You are BoatGPT, an AI chatbot. You aren't currently assigned any special roles.";
+      this.role = "You are BoatGPT, an AI chatbot. You aren't currently assigned a special role."
+      this.role = String(args.ROLE)
     }
 
     getInfo() {
@@ -40,6 +62,23 @@
             blockType: Scratch.BlockType.COMMAND,
             text: 'clear BoatGPT memory'
           }
+          {
+            "opcode": "setRole",
+            "blockType": "command",
+            "text": "assign role [ROLE]",
+            "arguments": {
+            "ROLE": {
+             "type": "string",
+             "defaultValue": "You are a friendly NPC."
+              }
+        }
+    }
+              {
+              "opcode": "getRole",
+              "blockType": "reporter",
+              "text": "current role"
+              }
+
         ]
       };
     }
@@ -50,9 +89,10 @@
       const body = {
         model: "llama-3.1-8b-instant",
         messages: [
-          ...this.history,
-          { role: "user", content: prompt }
-        ]
+    { role: "system", content: this.role },
+    ...this.history,
+    { role: "user", content: prompt }
+]
       };
 
       try {
