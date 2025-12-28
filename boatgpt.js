@@ -22,15 +22,22 @@
 (function(Scratch) {
   'use strict';
 
-  class BoatGPT {
+class BoatGPT {
     constructor(runtime) {
-      this.runtime = runtime;
-      this.lastResponse = "";
-      this.history = [];
-      this.role = "You are BoatGPT, an AI chatbot. You aren't currently assigned a special role."
-      this.role = String(args.ROLE)
+        this.runtime = runtime;
+        this.lastResponse = "";
+        this.history = [];
+        this.role = "You are BoatGPT, an AI chatbot. You aren't currently assigned a special role.";
     }
 
+    setRole(args) {
+        this.role = String(args.ROLE);
+    }
+
+    getRole() {
+        return this.role;
+    }
+}
     getInfo() {
       return {
         id: 'boatgpt',
