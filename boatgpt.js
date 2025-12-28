@@ -1,7 +1,7 @@
 (function(Scratch) {
   'use strict';
 
-  class IceGPT {
+  class BoatGPT {
     constructor(runtime) {
       this.runtime = runtime;
       this.lastResponse = "";
@@ -10,21 +10,21 @@
 
     getInfo() {
       return {
-        id: 'icegpt',
-        name: 'IceGPT',
+        id: 'boatgpt',
+        name: 'BoatGPT',
         blocks: [
           {
             opcode: 'ask',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'ask IceGPT [TEXT]',
+            text: 'ask BoatGPT [TEXT]',
             arguments: {
-              TEXT: { type: Scratch.ArgumentType.STRING, defaultValue: 'Hello IceGPT!' }
+              TEXT: { type: Scratch.ArgumentType.STRING, defaultValue: 'Hello BoatGPT!' }
             }
           },
           {
             opcode: 'quickAsk',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'quick ask IceGPT [TEXT]',
+            text: 'quick ask BoatGPT [TEXT]',
             arguments: {
               TEXT: { type: Scratch.ArgumentType.STRING, defaultValue: 'Say something' }
             }
@@ -37,7 +37,7 @@
           {
             opcode: 'clearMemory',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'clear IceGPT memory'
+            text: 'clear BoatGPT memory'
           }
         ]
       };
@@ -74,11 +74,11 @@
           this.history.push({ role: "user", content: prompt });
           this.history.push({ role: "assistant", content: reply });
         } else {
-          this.lastResponse = "IceGPT Error: " + JSON.stringify(data);
+          this.lastResponse = "BoatGPT/Groq Error: " + JSON.stringify(data);
         }
 
       } catch (e) {
-        this.lastResponse = "IceGPT Error: " + e;
+        this.lastResponse = "BoatGPT/Groq Error: " + e;
       }
     }
 
