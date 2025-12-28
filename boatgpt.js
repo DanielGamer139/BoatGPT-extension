@@ -25,17 +25,77 @@
 class BoatGPT {
     constructor(runtime) {
         this.runtime = runtime;
-        this.lastResponse = "";
         this.history = [];
+        this.latestResponse = "";
         this.role = "You are BoatGPT, an AI chatbot. You aren't currently assigned a special role.";
     }
 
+    // --- ROLE SYSTEM ---
     setRole(args) {
         this.role = String(args.ROLE);
     }
 
     getRole() {
         return this.role;
+    }
+
+    // --- REPORTER FOR LATEST RESPONSE ---
+    latestResponse() {
+        return this.latestResponse;
+    }
+
+    // --- MAIN ASK BLOCK (with memory) ---
+    async ask(args) {
+        const prompt = args.TEXT;
+
+        const body = {
+            model: "llama-3.1-8b-instant",
+            messages: [
+                { role: "system", content: this.role },
+                ...this.history,
+                { role: "user", content: prompt }
+            ]
+        };
+
+        const response = await fetch("https://boatgpt-groq.danielmat639.workers.dev", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+        const reply = data.choices?.[0]?.message?.content || "";
+
+        this.latestResponse = reply;
+        this.history.push({ role: "user", content: prompt });
+        this.history.push({ role: "assistant", content: reply });
+
+        return reply;
+    }
+
+    // --- QUICK ASK (no memory) ---
+    async quickAsk(args) {
+        const prompt = args.TEXT;
+
+        const body = {
+            model: "llama-3.1-8b-instant",
+            messages: [
+                { role: "system", content: this.role },
+                { role: "user", content: prompt }
+            ]
+        };
+
+        const response = await fetch("https://boatgpt-groq.danielmat639.workers.dev", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+        const reply = data.choices?.[0]?.message?.content || "";
+
+        this.latestResponse = reply;
+        return reply;
     }
 }
     getInfo() {
