@@ -131,7 +131,22 @@
             blockType: Scratch.BlockType.REPORTER,
             text: 'all BoatGPT instance IDs'
           },
-
+          {
+  opcode: 'deleteInstance',
+  blockType: Scratch.BlockType.COMMAND,
+  text: 'delete instance [ID]',
+  arguments: {
+    ID: {
+      type: Scratch.ArgumentType.STRING,
+      defaultValue: 'boatgpt2'
+    }
+  }
+},
+{
+  opcode: 'deleteAllInstances',
+  blockType: Scratch.BlockType.COMMAND,
+  text: 'delete all instances'
+},
           // Role management per instance
           {
             opcode: 'setRole',
@@ -326,6 +341,23 @@
       inst.history = [];
       inst.latest = '';
     }
+    deleteInstance(args) {
+  const id = String(args.ID || '').trim();
+  if (!id) return;
+
+  // Prevent deleting the default instance
+  if (id === 'boatgpt') return;
+
+  if (this.instances[id]) {
+    delete this.instances[id];
+  }
+}
+
+deleteAllInstances() {
+  // Reset to ONLY the default instance
+  this.instances = {};
+  this._createInstanceIfMissing('boatgpt');
+}
   }
 
   Scratch.extensions.register(new BoatGPT(Scratch.vm));
