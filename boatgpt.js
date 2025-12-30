@@ -22,7 +22,7 @@
     constructor(runtime) {
       this.runtime = runtime;
       this.history = [];
-      this.latestResponse = '';
+      this._latestResponse = '';
       this.role = 'You are BoatGPT, an AI chatbot. You are not currently assigned a special role.';
     }
 
@@ -101,7 +101,7 @@
     // Latest response reporter
     // ------------------------------------------------------------------
     latestResponse() {
-      return this.latestResponse;
+      return this._latestResponse;
     }
 
     // ------------------------------------------------------------------
@@ -109,7 +109,7 @@
     // ------------------------------------------------------------------
     clearMemory() {
       this.history = [];
-      this.latestResponse = '';
+      this._latestResponse = '';
     }
 
     // ------------------------------------------------------------------
@@ -149,12 +149,12 @@
             ? String(data.choices[0].message.content)
             : 'BoatGPT/Groq Error: Invalid response format';
 
-        this.latestResponse = reply;
+        this._latestResponse = reply;
 
         this.history.push({ role: 'user', content: prompt });
         this.history.push({ role: 'assistant', content: reply });
       } catch (e) {
-        this.latestResponse = 'BoatGPT/Groq Error: ' + e;
+        this._latestResponse = 'BoatGPT/Groq Error: ' + e;
       }
     }
 
@@ -197,8 +197,8 @@
         this.latestResponse = reply;
         return reply;
       } catch (e) {
-        this.latestResponse = 'BoatGPT/Groq Error: ' + e;
-        return this.latestResponse;
+        this._latestResponse = 'BoatGPT/Groq Error: ' + e;
+        return this._latestResponse;
       }
     }
   }
