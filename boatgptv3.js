@@ -336,7 +336,7 @@
 
       try {
         const response = await fetch(
-          'https://boatgpt-vision.danielmat639.workers.dev', // ← replace with your Worker URL
+          'https://boatgpt-vision.danielmat639.workers.dev/', // ← replace with your Worker URL
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
